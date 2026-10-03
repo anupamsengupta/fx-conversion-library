@@ -1,0 +1,24 @@
+/functional-spec <<path to requirements>>
+e.g.
+/functional-spec @docs/requirements/instrument-calculation-requirements-v1_1.md
+
+/tech-spec  <<path to functional-spec>>
+e.g.
+/tech-spec  @docs/functional-spec/claude-gen/day-ahead-exchange-spot.functional.md
+
+@sv-implementation-engineer <<path to technical-spec>>
+e.g.
+@sv-implementation-engineer @docs/technical-spec/claude-gen/valuation-service-data-models-v1.0.md
+@sv-implementation-engineer @docs/technical-spec/claude-gen/valuation-service-data-models-v2.0.md
+
+also, you can create plan in fist stage of implementation fo rreview like
+@sv-implementation-engineer @docs/technical-spec/claude-gen/valuation-service-data-models-v2.0.md create phased execution plans first. DO NOT START CODING YET
+
+@sv-code-reviewer <<path to technical-spec>>
+e.g.
+@sv-code-reviewer @docs/technical-spec/claude-gen/day-ahead-exchange-spot-v1.0.md
+
+/ui-feature <<path to requirements>> <<path to technical-spec>>
+e.g.
+/ui-feature @docs/functional-spec/claude-gen/day-ahead-exchange-spot.functional.md @docs/technical-spec/claude-gen/day-ahead-exchange-spot-v1.0.md
+

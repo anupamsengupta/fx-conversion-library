@@ -1,0 +1,34 @@
+for UOM Conversion please fix concerns as follows and generate a new .md that can be fed to claude code tech spec generation. The bottom line is the solution should be library based and teh data is fed or loaded and made available to it using caches. How its loaded? Mostly by events pushing it using CDM from source OR through SPI implementation of loader APIs:
+Blockers-
+1-No snapshots, edit records in force, no approval.
+2-No tenant isolation anywhere : tenant isolation shoudl be implicit.
+3-It conflicts with your library design : It should be specced as library first
+Design problems-
+5-Physical constants shouldn't be effective-dated or user-editable. : KG to MT OR BBL→m³ should be supplied as fixed conversion units as they do not change but at the same time should not be hardcoded in code IMO. but these data setup should be immutable in source system. I need this to work as library, where the data is loaded to cache as part of source sending eventing OR through SPI based loaders so different implementations per system can be pugged in.
+6-Reference conditions only exist on gas units, but the spec's own trap list says oil needs them. : resolve to the best of your knowledge solution per industry.
+7-Overrides only match the exact pair. : resolve to the best of your knowledge  solution per industry.
+8-Precedence contradicts itself. : resolve to the best of your knowledge  solution per industry.
+9-"First match wins" on transitive bridges hides ambiguity.  : resolve to the best of your knowledge  solution per industry.
+10-The scope model is linear when it needs to be combinatorial - resolve to the best of your knowledge  solution per industry. I do not think in CTRM there is any relevance of counterparty. Its teh material and its qualities. Any changes to qualities are applied as specification miss adjustments to price or quantity.
+11-The `basis` field is overloaded  : resolve to the best of your knowledge  solution per industry.
+12-The basis rule breaks the spec's own example 1  : resolve to the best of your knowledge  solution per industry.
+13-Which date drives effective dating? :  It shoudl be valuation date, I think this will come into play if there was a mistake and later was corrected. Thsi will then take the latest and compared to valuation date. The override of conversion factors at trade or delivery is a different case, where teh data on transactions should take teh precedence.
+14-The calendar and profile engine doesn't belong here. : Remove this.
+15-The profile granularity is out of date for EU power. : Remove this.
+16-"Stateless library" is false.  : This is correct.
+17-The cache key will explode. : True , ideally the cache should keep track of bi-temporality searches, tenants, UOM attributes.
+18-`deliveryPeriod {start, end}` has no type. : Seems not relevant since UOM conversions needs no delivery dates. It needs to take the best that is available today and approved by four eyes principle.
+
+
+
+please see attached the spec for UOM conversion requirements in a CTRM/ETRM. Please rate this in terms of completeness and coverage parameters.
+Review teh tech spec and check if thsi caters to teh functional spec given earlier.
+How woudl you rate the functional spec from readability index for layman or a fresh coder?
+Can you generate a more human readable spec with postfix as -layman.md that will be easier to read with proper explanation of each item in the spec?
+
+
+review @README.md and see if that is inline with current implementation. It shoudl have overall architecture, how to run tests, how to debug, typical code flows etc. How to use as a library consumer, all that need to be included in a manner that can be understood by layman/junior developer as consumer.
+
+create a README.md at root folder such that  tt shoudl have overall architecture, how to run tests, how to debug, typical code flows etc. How to use as a library consumer, all that need to be included in a manner that can be understood by layman/junior developer as consumer. Also list out the main top 5 tests that cover most of teh functional requirement/flows.
+
+
