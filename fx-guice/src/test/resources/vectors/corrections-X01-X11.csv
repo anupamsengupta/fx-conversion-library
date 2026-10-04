@@ -1,0 +1,13 @@
+# Golden correction/entitlement/determinism vectors X01-X11 (functional spec S19.4).
+id,description,expected
+X01,"ECB 2-Apr OFFICIAL 1.0800 recorded 14:20; CORRECTED 1.0810 recorded 3-Apr; CONTRACT FirstOfficial, snapshot after correction",1.0800 unchanged
+X02,"Same fixing MTM LatestCorrected knowledge cut 2-Apr 18:00",1.0800
+X03,"Same snapshot knowledge cut 3-Apr 18:00",1.0810 onFixingCorrected-raised-at-ingest
+X04,"Replay of X02 by pinning the original snapshot after the correction exists",bit-identical-to-X02
+X05,"Tenant without WMR rights policy [WMR ECB]",ECB-used FX_W_SOURCE_SKIPPED_NOT_ENTITLED
+X06,"Same tenant policy [WMR] only no fallback",FX_E_SOURCE_NOT_ENTITLED
+X07,"Manual override event with author = approver",FX_I_APPROVAL_INVALID (structurally unreachable via normal construction -- see Job 1 report)
+X08,"Approved override for USD/INR on a date with a missing RBI fixing",MANUAL_OVERRIDE CONFIRMED
+X09,"INTERNAL_EOD source in a CONTRACT_SETTLEMENT policy",FX_V_SOURCE_NOT_ALLOWED
+X10,"G05 computed on two different JVM vendors",identical-34-digit-results
+X11,"PRICE_MATCHED with prices for sequences 1-4 against a 5-observation PDR set",FX_V_PRICE_SERIES_MISMATCH

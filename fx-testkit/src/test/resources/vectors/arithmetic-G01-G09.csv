@@ -1,0 +1,11 @@
+# Golden arithmetic vectors G01-G09 (functional spec S19.1). Values given verbatim in the tech spec body.
+id,description,expected
+G01,EUR/JPY from EUR/USD 1.0850 and USD/JPY 149.20 (major cross),161.8820
+G02,GBP/AUD from GBP/USD 1.2700 and AUD/USD 0.6600 (inverse leg),1.924242424242424242424242424242424
+G03,NBP 85.50 GBp/therm -> INR via GBP/USD 1.2700 USD/INR 83.40 (fixed-factor first+last),1.05918
+G04,EUR/USD forward LINEAR_POINTS 120d from 35.0/68.0 pillars,1.0895153846
+G05,EUR/USD forward LOG_LINEAR_CARRY 120d (deterministic decimal ln/exp),1.0895143
+G06,Partial period 22 days 10 confirmed avg 1.0840 / 12 forward avg 1.0872,1.085745454545454545454545454545455
+G07,PDR 5-obs PRICE_MATCHED USD->EUR,75.279220779
+G08,Same set RATE_AVERAGE (avg rate 1.09),75.229357798
+G09,BGN -> EUR legacy trade 2026-03-01 (legal peg),1.95583

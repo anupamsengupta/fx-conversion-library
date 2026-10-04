@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FX Conversion Library, reactor root.
+
+  Per the implementation plan (Section 1, Section 2) this is a standalone
+  library reactor, not a module inside the valuation-engine platform
+  reactor. Modules are added to the modules list only once they
+  physically exist on disk and their own build phase has started, see
+  docs/technical-spec/claude-gen/libraries/plan/fx-conversion-library-implementation-plan-v1.0.md
+  Section 2 (Build Phase Overview).
+
+  Phase 1 (this commit) adds only fx-api. fx-core, fx-cdm, fx-testkit and
+  fx-guice are out of scope until their own phases run.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.power.fx</groupId>
+    <artifactId>fx-conversion</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>FX Conversion Library (reactor)</name>
+    <description>
+        Standalone, host-embeddable FX conversion library reactor for EU
+        physical power trading. See fx-conversion-library-v1.0.md (tech
+        spec) and its implementation plan for the full module topology.
+    </description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>21</maven.compiler.release>
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
+    </properties>
+
+    <modules>
+        <module>fx-api</module>
+        <module>fx-core</module>
+        <module>fx-cdm</module>
+        <module>fx-testkit</module>
+        <module>fx-guice</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                    <configuration>
+                        <release>${maven.compiler.release}</release>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.2.5</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

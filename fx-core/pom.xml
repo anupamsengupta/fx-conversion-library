@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  fx-core, Phase 2 module (implementation plan Section 4).
+
+  JDK-only engine implementation, no I/O, no system clock on the
+  resolution path (D-01), no double/float/Math/StrictMath anywhere
+  (D-09). Depends on fx-api at compile scope only: no Guice, no Spring,
+  no database driver, no other runtime dependency (Appendix A:
+  fx-core depends on fx-api only).
+
+  jakarta.inject is declared at `provided` scope (A-04/TI-02), matching
+  fx-api's own precedent, so constructors may carry @Inject without
+  forcing a DI container at build or test time.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.power.fx</groupId>
+        <artifactId>fx-conversion</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>fx-core</artifactId>
+    <packaging>jar</packaging>
+
+    <name>fx-core</name>
+    <description>
+        Canonical engine implementation of every internal port: date
+        resolution, pair resolution, rate selection, forward curves,
+        deterministic decimal transcendentals, averaging, leg chains,
+        precision/allocation, bitemporal caches, entitlements, lineage,
+        memoisation and ingestion. No framework, no I/O, no system clock
+        on the resolution path (D-01, D-09).
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.power.fx</groupId>
+            <artifactId>fx-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>2.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!--
+      Shift-left architecture fixture (plan Section 2.1) retired: Phase 3b
+      Task 3b.1 has shipped the real, packaged ArchitectureTest /
+      NoFloatingPointBytecodeTest in fx-testkit (identical rule set and
+      opcode list) and the throwaway ArchUnit/ASM fixture that lived here
+      through Phase 2 has been deleted per the plan's own "this copy is
+      deleted, not evolved" instruction; see fx-testkit's
+      com.power.fx.testkit.arch.ArchitectureTest Javadoc. No fx-core source
+      file uses jqwik either, so that test dependency was removed too; it
+      would be re-added here only if a future fx-core-local property test
+      needs it.
+    -->
+</project>

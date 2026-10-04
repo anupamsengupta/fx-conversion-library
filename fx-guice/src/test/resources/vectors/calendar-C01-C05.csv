@@ -1,0 +1,7 @@
+# Golden calendar resolution vectors C01-C05 (functional spec S19.2, D-02).
+id,description,expected
+C01,"ECB fixing, raw FX date Fri 3-Apr-26 (Good Friday), USE_PREVIOUS","2026-04-02 CONFIRMED DATE_RULE_ADJUSTED"
+C02,"Same, USE_NEXT (skips Easter Monday 6-Apr)","2026-04-07 CONFIRMED"
+C03,"Same, FAIL",FX_E_NON_PUBLICATION_DATE
+C04,"WMR outage on scheduled day, policy [WMR ECB]","ECB used ESTIMATED FALLBACK_ALT_SOURCE"
+C05,"Daily gas delivery Sat 7-Nov-26, USE_PREVIOUS","2026-11-06 CONFIRMED"

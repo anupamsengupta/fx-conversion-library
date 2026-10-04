@@ -49,7 +49,13 @@
       "Bash(docker info:*)",
       "Skill(functional-spec)",
       "Skill(tech-spec)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(java -version)",
+      "Bash(echo \"EXIT_CODE=$?\")",
+      "Bash(pip show *)",
+      "Bash(cd *)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(tee /tmp/full_build_output2.log)"
     ]
   },
   "enabledPlugins": {

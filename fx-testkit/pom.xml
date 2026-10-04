@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  fx-testkit, Phase 3b module (implementation plan Section 6).
+
+  Test-support library: golden vectors, in-memory SPI doubles and the
+  shipped ArchUnit/ASM architecture gate (S12.5). D-01/D-09 do not apply to
+  this module itself (it is test-support code, not resolution-path code),
+  but several of its own test classes mechanically verify that fx-api and
+  fx-core uphold them. Compile dependency on fx-api + fx-core only (plan
+  Section 2, Phase 3b row); no dependency on fx-cdm or fx-guice.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.power.fx</groupId>
+        <artifactId>fx-conversion</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>fx-testkit</artifactId>
+    <packaging>jar</packaging>
+
+    <name>fx-testkit</name>
+    <description>
+        Golden vectors, in-memory SPI test doubles, and the shipped
+        architecture/bytecode enforcement suite (AR-01..AR-10,
+        NoFloatingPointBytecodeTest) for the FX Conversion Library.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.power.fx</groupId>
+            <artifactId>fx-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.power.fx</groupId>
+            <artifactId>fx-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>2.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Shipped architecture gate (S12.5, Task 3b.1): real ArchUnit + ASM, not a shift-left fixture. -->
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+            <version>1.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>9.7.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-tree</artifactId>
+            <version>9.7</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Property-based tests (Task 3b.6, S12.2). -->
+        <dependency>
+            <groupId>net.jqwik</groupId>
+            <artifactId>jqwik</artifactId>
+            <version>1.9.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

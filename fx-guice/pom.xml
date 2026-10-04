@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  fx-guice, Phase 4 module (implementation plan Section 7): the v1.0
+  exit-gate module.
+
+  Guice-only DI wiring for the library's internal ports and fx-core default
+  implementations (S9.1). Depends on fx-core at compile scope plus Guice 7.
+  No Spring anywhere in the reactor (MC-1). fx-testkit is a TEST-SCOPE-ONLY
+  dependency: WiringTest reuses its VectorRunner-adjacent fixtures
+  (GoldenReferenceData, GoldenSnapshots, VectorExpectations, FxAssertions,
+  the InMemory* SPI doubles) to re-run the golden vector suite through the
+  Guice-wired FxConverter, but fx-guice's own main code must never depend on
+  fx-testkit (that would be a test-support dependency leaking into shipped
+  code).
+
+  TI-02 note (see FxModule's class Javadoc for the full explanation): the
+  implementation plan's working assumption was that fx-core constructors
+  would carry @Inject annotations (A-04 precedent). In the actual Phase 2
+  code only FxMath does; every other fx-core default implementation has a
+  plain (often multi-arg, non-@Inject) constructor. FxModule therefore uses
+  explicit @Provides methods for every binding whose target class does not
+  expose a no-arg or @Inject-annotated constructor, per the plan's own
+  documented TI-02 fallback. jakarta.inject is still declared (matching the
+  sibling modules' convention and because Guice 7 itself uses
+  jakarta.inject.Inject for its own annotation processing).
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.power.fx</groupId>
+        <artifactId>fx-conversion</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>fx-guice</artifactId>
+    <packaging>jar</packaging>
+
+    <name>fx-guice</name>
+    <description>
+        Guice 7 wiring for the FX Conversion Library: FxModule (S9.1),
+        MeteredFxConverter (A-11, the sole System.nanoTime() caller in the
+        reactor) and FxLifecycle (S8.4 reconciliation/hot-window scheduling,
+        TI-04). The v1.0 end-to-end exit gate (WiringTest) lives here.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.power.fx</groupId>
+            <artifactId>fx-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>7.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <!-- Test-scope only (see class-level Javadoc note above): WiringTest reuses the shipped
+             golden-vector fixtures and in-memory SPI doubles; fx-guice's main code never depends
+             on fx-testkit. -->
+        <dependency>
+            <groupId>com.power.fx</groupId>
+            <artifactId>fx-testkit</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

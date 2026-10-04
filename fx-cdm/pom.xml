@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  fx-cdm, Phase 3a module (implementation plan Section 5).
+
+  Pure CDM-event-to-FxIngestRecord mapper (Pattern #42 Data Mapper,
+  tech spec S4.11/S6.17). No transport, no I/O, no scheduler.
+
+  Depends on fx-api ONLY. A dependency on fx-core is structurally
+  FORBIDDEN (Appendix A, MC-5): mappers are pure, and a dependency here
+  would let transport concerns reach the engine. This is enforced both by
+  this POM (no fx-core dependency declared) and mechanically by
+  NoFxCoreDependencyTest (ArchUnit, test scope).
+
+  BLOCKED ON TI-01: there is no real CDM schema artifact GAV, no real
+  event/topic naming, and no real payload field names for any of the
+  thirteen FxEntityType values. Per the implementation plan's Phase 3a
+  acceptance gate, this module's exit state is "scaffolded and blocked,"
+  not "complete." CdmFxEvent is a self-contained placeholder envelope
+  defined inside this module (see its Javadoc), NOT a dependency on an
+  invented external schema artifact/GAV, because no such artifact exists
+  yet to depend on.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.power.fx</groupId>
+        <artifactId>fx-conversion</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>fx-cdm</artifactId>
+    <packaging>jar</packaging>
+
+    <name>fx-cdm</name>
+    <description>
+        CDM event envelope mappers: CdmFxEvent -&gt; FxIngestRecord. Pure
+        functions only, no framework, no I/O. Scaffolded and blocked on
+        TI-01 (CDM schema artifact GAV, payload field names); see Javadoc
+        on CdmFxEvent and CdmFxEventMapper.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.power.fx</groupId>
+            <artifactId>fx-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+          Structural guard only (NoFxCoreDependencyTest): confirms fx-cdm's
+          compiled classes never reference com.power.fx.core.. Mirrors
+          fx-core's own shift-left ArchUnit fixture version pin.
+        -->
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+            <version>1.3.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
